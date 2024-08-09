@@ -18,23 +18,23 @@ export const goods = [
 export const App = () => {
   const [selectedGood, setSelectedGood] = useState(goods[8]);
 
-  const Title = () => (
-    <>
-      {selectedGood?.length === 0 ? (
-        'No goods selected'
-      ) : (
-        <>
-          {selectedGood} is selected
-          <button
-            data-cy="ClearButton"
-            type="button"
-            className="delete ml-3"
-            onClick={() => setSelectedGood('')}
-          />
-        </>
-      )}
-    </>
-  );
+  const Title = () => {
+    if (selectedGood.length === 0) {
+      return 'No goods selected';
+    }
+
+    return (
+      <>
+        {selectedGood} is selected
+        <button
+          data-cy="ClearButton"
+          type="button"
+          className="delete ml-3"
+          onClick={() => setSelectedGood('')}
+        />
+      </>
+    );
+  };
 
   const Button = ({ good }) => {
     const isSelected = good === selectedGood;
