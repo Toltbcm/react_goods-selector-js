@@ -15,46 +15,25 @@ export const goods = [
   'Garlic',
 ];
 
-export const Title = ({ selectedGood, setSelectedGood }) => (
-  <>
-    {selectedGood?.length === 0 ? (
-      'No goods selected'
-    ) : (
-      <>
-        {selectedGood} is selected
-        <button
-          data-cy="ClearButton"
-          type="button"
-          className="delete ml-3"
-          onClick={() => setSelectedGood('')}
-        />
-      </>
-    )}
-  </>
-);
-
-export const Button = ({ good, selectedGood, setSelectedGood }) => {
-  const isSelected = good === selectedGood;
-
-  return (
-    <button
-      data-cy={isSelected ? 'RemoveButton' : 'AddButton'}
-      type="button"
-      className={`button ${isSelected ? 'is-info' : ''}`}
-      onClick={() => setSelectedGood(isSelected ? '' : good)}
-    >
-      {isSelected ? '-' : '+'}
-    </button>
-  );
-};
-
 export const App = () => {
   const [selectedGood, setSelectedGood] = useState(goods[8]);
 
   return (
     <main className="section container">
       <h1 className="title is-flex is-align-items-center">
-        <Title selectedGood={selectedGood} setSelectedGood={setSelectedGood} />
+        {!selectedGood ? (
+          'No goods selected'
+        ) : (
+          <>
+            {selectedGood} is selected
+            <button
+              data-cy="ClearButton"
+              type="button"
+              className="delete ml-3"
+              onClick={() => setSelectedGood('')}
+            />
+          </>
+        )}
       </h1>
 
       <table className="table">
@@ -68,11 +47,16 @@ export const App = () => {
               key={good}
             >
               <td>
-                <Button
-                  good={good}
-                  selectedGood={selectedGood}
-                  setSelectedGood={setSelectedGood}
-                />
+                <button
+                  data-cy={good === selectedGood ? 'RemoveButton' : 'AddButton'}
+                  type="button"
+                  className={`button ${good === selectedGood ? 'is-info' : ''}`}
+                  onClick={() =>
+                    setSelectedGood(good === selectedGood ? '' : good)
+                  }
+                >
+                  {good === selectedGood ? '-' : '+'}
+                </button>
               </td>
               <td data-cy="GoodTitle" className="is-vcentered">
                 {good}
